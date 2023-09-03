@@ -4,20 +4,20 @@
 #include "kernel/fs.h"
 #include "kernel/param.h"
 
+
+// Be vary careful about the exec function, its second parameter argv is in the form: 
+// [[command], [arg1], [arg2], ...]
+// thus, for xargs, we only need to change arg2 part in the simplified scenario 
+
 int
 main(int argc, char *argv[]){
-    int index = 0;
+    int index = 1;
     int _argc = 1;
     char *_argv[MAXARG];
-    if(strcmp(argv[1],"-n")==0){
-        index = 3;
-    }else{
-        index = 1;
-    }
+
      _argv[0] = malloc(strlen(argv[index])+1);
     strcpy(_argv[0],argv[index]);
     for(int i=index+1;i<argc;++i){
-        //printf("--%s--\n",argv[i]);
         _argv[_argc] = malloc(strlen(argv[i])+1);
         strcpy(_argv[_argc++],argv[i]);
     }
